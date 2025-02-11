@@ -1,0 +1,31 @@
+{
+  "devDependencies": {
+    "electron": "^34.1.1",
+    "electron-packager": "^17.1.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "jquery": "^3.7.1",
+    "sqlite3": "^5.1.7"
+  },
+  "name": "casefinder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-packager . CaseFinder --platform=win32 --arch=x64 --out=dist/ --overwrite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethandudu/casefinder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ethandudu/casefinder/issues"
+  },
+  "homepage": "https://github.com/ethandudu/casefinder#readme"
+}

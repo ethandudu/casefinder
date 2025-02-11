@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Finder</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <img src="./assets/logo.png" alt="logo" width="40" height="40">
+            <span class="fs-4">Case Finder</span>
+        </a>
+  
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a href="index.html" class="nav-link active" aria-current="page">Recherche</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">A propos</a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1>Rechercher</h1>
+                <form>
+                    <div class="mb-3">
+                        <label for="searchtype" class="form-label">Type de recherche</label>
+                        <select class="form-select" id="searchtype" name="searchtype">
+                            <option value="plot">Parcelle</option>
+                            <option value="owner">Propriétaire</option>
+                        </select>
+                        <div id="plotsearch">
+                            <div class="col">
+                                <label for="city" class="form-label">Commune</label>
+                                <select class="form-select" id="city" name="city">
+                                    <option value="brest">Brest</option>
+                                    <option value="plouzané">Plouzané</option>
+                                    <option value="gouesnou">Gouesnou</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="section" class="form-label">Section</label>
+                                <input type="text" class="form-control" id="section" name="section">
+                            </div>
+                            <div class="col">
+                                <label for="plot" class="form-label">Parcelle</label>
+                                <input type="text" class="form-control" id="plot" name="plot">
+                            </div>
+                        </div>
+                        <div id="ownersearch" style="display: none;">
+                            <div class="col">
+                                <label for="cityowner" class="form-label">Commune</label>
+                                <input type="text" class="form-control" id="cityowner" name="cityowner">
+                            </div>
+                            <div class="col">
+                                <label for="owner" class="form-label">Propriétaire</label>
+                                <input type="text" class="form-control" id="owner" name="owner">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="searchbtn">Rechercher</button>
+                </form>
+            </div>
+        </div>
+        <div id="results" >
+            <hr class="section-divider">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Résultats</h1>
+                    <table class="table table-stripped table-hover" id="resultstable">
+                        <thead>
+                            <tr>
+                                <th scope="col">N° Dossier</th>
+                                <th scope="col">Commune</th>
+                                <th scope="col">Section</th>
+                                <th scope="col">Parcelle</th>
+                                <th scope="col">Propriétaire</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultstablebody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./js/index.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
