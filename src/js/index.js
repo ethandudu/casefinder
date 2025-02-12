@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         formButton.addEventListener('click', (event) => {
             event.preventDefault();
             if (document.getElementById('searchtype').value === 'plot') {
+                if (!document.getElementById('city').value || !document.getElementById('section').value || !document.getElementById('plot').value) {
+                    alert('Please fill all fields.');
+                    return;
+                }
                 //sanitize input
                 const city = document.getElementById('city').value;
                 const section = document.getElementById('section').value;
@@ -36,6 +40,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     owner: null
                 });
             } else {
+                if (!document.getElementById('cityowner').value || !document.getElementById('owner').value) {
+                    alert('Please fill all fields.');
+                    return;
+                }
                 const city = document.getElementById('cityowner').value;
                 const owner = document.getElementById('owner').value;
                 window.electronAPI.sendToMain('search', {
