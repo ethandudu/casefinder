@@ -58,7 +58,7 @@ ipcMain.on('search', (event, arg) => {
         params = [city, section, plot];
     } else {
         query = `SELECT * FROM cases WHERE city = ? AND owner LIKE ? LIMIT 50`;
-        params = [city, owner];
+        params = [city, `%${owner}%`];
     }
     
     db.all(query, params, (err, rows) => {
