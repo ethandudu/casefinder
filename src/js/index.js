@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (formButton) {
         formButton.addEventListener('click', (event) => {
             event.preventDefault();
+            resetTable();
             if (document.getElementById('searchtype').value === 'plot') {
                 if (!document.getElementById('city').value || !document.getElementById('section').value || !document.getElementById('plot').value) {
                     alert('Please fill all fields.');
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const city = document.getElementById('city').value;
                 const section = document.getElementById('section').value;
                 const plot = document.getElementById('plot').value;
+
                 window.electronAPI.sendToMain('search', {
                     searchtype: 'plot',
                     city,
@@ -49,6 +51,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
                 const city = document.getElementById('cityowner').value;
                 const owner = document.getElementById('owner').value;
+
                 window.electronAPI.sendToMain('search', {
                     searchtype: 'owner',
                     city,
@@ -64,7 +67,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 //fetch cities from main process
 window.electronAPI.receiveFromMain('cities', (data) => {
-    const searchTypeSelect = document.getElementById('searchtype');
     const citySelect = document.getElementById('city');
     const cityOwnerSelect = document.getElementById('cityowner');
     if (citySelect) {
@@ -95,12 +97,24 @@ window.electronAPI.receiveFromMain('search-results', (data) => {
         //populate table with results
         data.results.forEach((row) => {
             table.innerHTML += `<tr>
+                <td>${row.case}</td>
                 <td>${row.city}</td>
                 <td>${row.section}</td>
                 <td>${row.plot}</td>
                 <td>${row.owner}</td>
-                <td>${row.case}</td>
             </tr>`;
         });
     }
 });
+
+function resetTable() {
+    const table = document.getElementById('resultstable');
+    table.innerHTML = `<tr>
+        <th scope="col">N° Dossier</th>
+        <th scope="col">Commune</th>
+        <th scope="col">Section</th>
+        <th scope="col">Parcelle</th>
+        <th scope="col">Propriétaire</th>
+    </tr>`;
+
+}

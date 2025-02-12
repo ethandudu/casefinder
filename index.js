@@ -52,17 +52,12 @@ app.on('window-all-closed', () => {
 
 ipcMain.on('search', (event, arg) => {
     const {searchtype, city, section, plot, owner} = arg;
-    console.log(`Search type: ${searchtype}`);
-    console.log(`City: ${city}`);
-    console.log(`Section: ${section}`);
-    console.log(`Plot: ${plot}`);
-    console.log(`Owner: ${owner}`);
     let query, params;
     if (searchtype === 'plot') {
         query = `SELECT * FROM cases WHERE city = ? AND section = ? AND plot = ? LIMIT 50`;
         params = [city, section, plot];
     } else {
-        query = `SELECT * FROM cases WHERE city = ? AND owner = ? LIMIT 50`;
+        query = `SELECT * FROM cases WHERE city = ? AND owner LIKE ? LIMIT 50`;
         params = [city, owner];
     }
     
@@ -77,7 +72,7 @@ ipcMain.on('search', (event, arg) => {
                 event.reply('search-results', {results: rows});
             }
         }
-    }); 
+    });
 });
 
 ipcMain.on('get-cities', (event, arg) => {
