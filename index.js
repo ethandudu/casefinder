@@ -16,7 +16,7 @@ function initializeDatabase() {
             "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             "city" INTEGER NOT NULL DEFAULT 0,
             "section" VARCHAR(2) NOT NULL,
-            "plot" INTEGER NOT NULL,
+            "plot" VARCHAR(255) NOT NULL,
             "case" VARCHAR(15) NOT NULL,
             "owner" VARCHAR(255) NULL DEFAULT NULL
         )`);
@@ -54,8 +54,8 @@ ipcMain.on('search', (event, arg) => {
     const {searchtype, city, section, plot, owner} = arg;
     let query, params;
     if (searchtype === 'plot') {
-        query = `SELECT * FROM cases WHERE city = ? AND section = ? AND plot = ? LIMIT 50`;
-        params = [city, section, plot];
+        query = `SELECT * FROM cases WHERE city = ? AND section = ? AND plot LIKE ? LIMIT 50`;
+        params = [city, section, `%${plot}%`];
     } else {
         query = `SELECT * FROM cases WHERE city = ? AND owner LIKE ? LIMIT 50`;
         params = [city, `%${owner}%`];
