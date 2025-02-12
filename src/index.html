@@ -32,11 +32,7 @@
                         <div id="plotsearch">
                             <div class="col">
                                 <label for="city" class="form-label">Commune</label>
-                                <select class="form-select" id="city" name="city">
-                                    <option value="brest">Brest</option>
-                                    <option value="plouzané">Plouzané</option>
-                                    <option value="gouesnou">Gouesnou</option>
-                                </select>
+                                <select class="form-select" id="city" name="city"></select>
                             </div>
                             <div class="col">
                                 <label for="section" class="form-label">Section</label>
@@ -50,7 +46,7 @@
                         <div id="ownersearch" style="display: none;">
                             <div class="col">
                                 <label for="cityowner" class="form-label">Commune</label>
-                                <input type="text" class="form-control" id="cityowner" name="cityowner">
+                                <select class="form-select" id="cityowner" name="cityowner"></select>
                             </div>
                             <div class="col">
                                 <label for="owner" class="form-label">Propriétaire</label>
@@ -62,24 +58,24 @@
                 </form>
             </div>
         </div>
-        <div id="results" >
+        <div id="results" class="table-responsive">
             <hr class="section-divider">
             <div class="card">
                 <div class="card-body">
                     <h1>Résultats</h1>
                     <table class="table table-stripped table-hover" id="resultstable">
-                        <thead>
-                            <tr>
-                                <th scope="col">N° Dossier</th>
-                                <th scope="col">Commune</th>
-                                <th scope="col">Section</th>
-                                <th scope="col">Parcelle</th>
-                                <th scope="col">Propriétaire</th>
-                            </tr>
-                        </thead>
-                        <tbody id="resultstablebody">
-                        </tbody>
-                    </table>
+                    <thead>
+                        <tr>
+                            <th scope="col">N° Dossier</th>
+                            <th scope="col">Commune</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Parcelle</th>
+                            <th scope="col">Propriétaire</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultstablebody">
+                    </tbody>
+                </table>
                 </div>
             </div>
         </div>

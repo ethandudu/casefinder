@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    //get cities from db
+    window.electronAPI.sendToMain('get-cities', {});
+
     const searchTypeSelect = document.getElementById('searchtype');
 
     if (searchTypeSelect) {
@@ -59,26 +62,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
+//fetch cities from main process
+window.electronAPI.receiveFromMain('cities', (data) => {
+    const searchTypeSelect = document.getElementById('searchtype');
+    const citySelect = document.getElementById('city');
+    const cityOwnerSelect = document.getElementById('cityowner');
+    if (citySelect) {
+        data.cities.forEach((city) => {
+            const option = document.createElement('option');
+            option.value = city.city;
+            option.text = city.city;
+            citySelect.add(option);
+
+            const option2 = document.createElement('option');
+            option2.value = city.city;
+            option2.text = city.city;
+            cityOwnerSelect.add(option2);
+        });
+    } else {
+        console.error('Element with id "city" not found.');
+    }
+});
+
+
+//fetch search results from main process
 window.electronAPI.receiveFromMain('search-results', (data) => {
-    //populate table with results
     document.getElementById('results').style.display = 'block';
-    const table = document.getElementById('resultstablebody');
+    const table = document.getElementById('resultstable');
     if (data.error) {
         table.innerHTML = `<tr><td colspan="5">${data.error}</td></tr>`;
     } else {
-        let tableRows = '';
-        data.results.forEach((result) => {
-            tableRows += `<tr>
-                <td>${result.city}</td>
-                <td>${result.section}</td>
-                <td>${result.plot}</td>
-                <td>${result.owner}</td>
-                <td>${result.case}</td>
+        //populate table with results
+        data.results.forEach((row) => {
+            table.innerHTML += `<tr>
+                <td>${row.city}</td>
+                <td>${row.section}</td>
+                <td>${row.plot}</td>
+                <td>${row.owner}</td>
+                <td>${row.case}</td>
             </tr>`;
-            table.innerHTML = tableRows;
         });
-        
-        table.style.display = 'block';
-
     }
 });

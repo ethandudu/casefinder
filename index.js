@@ -77,6 +77,20 @@ ipcMain.on('search', (event, arg) => {
                 event.reply('search-results', {results: rows});
             }
         }
+    }); 
+});
+
+ipcMain.on('get-cities', (event, arg) => {
+    db.all(`SELECT DISTINCT city FROM cases`, [], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            event.reply('cities', {error: err.message});
+        } else {
+            if (rows.length === 0) {
+                event.reply('cities', {error: 'No cities found.'});
+            } else {
+                event.reply('cities', {cities: rows});
+            }
+        }
     });
-    
 });
