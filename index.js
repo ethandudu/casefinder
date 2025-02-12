@@ -32,10 +32,9 @@ function createWindow () {
             nodeIntegration: false,
             contextIsolation: true,
             enableRemoteModule: false,
-            
         },
         show: false,
-        icon: path.join(__dirname, 'src/assets/logo.png')
+        icon: path.join(__dirname, 'app.ico')
     })
     win.maximize();
     win.show();
