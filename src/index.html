@@ -13,7 +13,9 @@
         </a>
   
         <ul class="nav nav-pills">
-          <li class="nav-item"><a href="index.html" class="nav-link active" aria-current="page">Recherche</a></li>
+          <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Accueil</a></li>
+          <li class="nav-item"><a href="search.html" class="nav-link">Rechercher</a></li>
+          <li class="nav-item"><a href="create.html" class="nav-link">Créer</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">A propos</a></li>
         </ul>
     </header>
@@ -21,61 +23,34 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h1>Rechercher</h1>
-                <form>
-                    <div class="mb-3">
-                        <label for="searchtype" class="form-label">Type de recherche</label>
-                        <select class="form-select" id="searchtype" name="searchtype">
-                            <option value="plot">Parcelle</option>
-                            <option value="owner">Propriétaire</option>
-                        </select>
-                        <div id="plotsearch">
-                            <div class="col">
-                                <label for="city" class="form-label">Commune</label>
-                                <select class="form-select" id="city" name="city"></select>
-                            </div>
-                            <div class="col">
-                                <label for="section" class="form-label">Section</label>
-                                <input type="text" class="form-control" id="section" name="section">
-                            </div>
-                            <div class="col">
-                                <label for="plot" class="form-label">Parcelle</label>
-                                <input type="text" class="form-control" id="plot" name="plot">
-                            </div>
-                        </div>
-                        <div id="ownersearch" style="display: none;">
-                            <div class="col">
-                                <label for="cityowner" class="form-label">Commune</label>
-                                <select class="form-select" id="cityowner" name="cityowner"></select>
-                            </div>
-                            <div class="col">
-                                <label for="owner" class="form-label">Propriétaire</label>
-                                <input type="text" class="form-control" id="owner" name="owner">
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="searchbtn">Rechercher</button>
-                </form>
+                <h1>Bienvenue sur Case Finder</h1>
+                <p>Case Finder est une application web qui permet de trouver rapidement l'emplacement de dossiers non numérisés.</p>
+                <p>Utilisez les onglets de navigation pour rechercher ou créer un dossier.</p>
+                <p>Pour plus d'informations, consultez la page <a href="about.html">A propos</a>.</p>
             </div>
         </div>
-        <div id="results" class="table-responsive" style="display: none;">
-            <hr class="section-divider">
-            <div class="card">
-                <div class="card-body">
-                    <h1>Résultats</h1>
-                    <table class="table table-stripped table-hover" id="resultstable">
-                    <thead>
-                        <tr>
-                            <th scope="col">N° Dossier</th>
-                            <th scope="col">Commune</th>
-                            <th scope="col">Section</th>
-                            <th scope="col">Parcelle</th>
-                            <th scope="col">Propriétaire</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultstablebody">
-                    </tbody>
-                </table>
+        <div class="card mt-4">
+            <div class="card-body row">
+                <h2>Accès rapides</h2>
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <img src="assets/icons8-search-100.png" alt="search icon" width="50" height="50">
+                            <h5 class="card-title">Rechercher un dossier</h5>
+                            <p class="card-text">Trouvez rapidement l'emplacement d'un dossier en fonction de ses propriétés.</p>
+                            <a href="search.html" class="btn btn-primary">Rechercher</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <img src="assets/icons8-add-folder-100.png" alt="search icon" width="50" height="50">
+                            <h5 class="card-title">Créer un dossier</h5>
+                            <p class="card-text">Créez un nouveau dossier non numérisé.</p>
+                            <a href="create.html" class="btn btn-primary">Créer</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
