@@ -1,12 +1,12 @@
 {
   "devDependencies": {
-    "electron": "^34.1.1",
-    "electron-packager": "^17.1.2"
+    "electron": "^40.6.1",
+    "@electron/packager": "^19.0.5"
   },
   "dependencies": {
-    "bootstrap": "^5.3.3",
-    "jquery": "^3.7.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "bootstrap": "^5.3.8",
+    "jquery": "^4.0.0"
   },
   "name": "casefinder",
   "version": "1.0.0",
@@ -22,7 +22,7 @@
     "url": "git+https://github.com/ethandudu/casefinder.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ethandudu",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ethandudu/casefinder/issues"
