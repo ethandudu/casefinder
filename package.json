@@ -1,10 +1,11 @@
 {
   "devDependencies": {
-    "electron": "^40.6.1",
-    "@electron/packager": "^19.0.5"
+    "@electron/packager": "^19.0.5",
+    "@electron/rebuild": "^4.0.3",
+    "electron": "^40.6.1"
   },
   "dependencies": {
-    "sqlite3": "^5.1.7",
+    "better-sqlite3": "^12.6.2",
     "bootstrap": "^5.3.8",
     "jquery": "^4.0.0"
   },
@@ -15,7 +16,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build": "electron-packager . CaseFinder --platform=win32 --arch=x64 --out=dist/ --overwrite --icon=app.ico"
+    "build": "electron-packager . CaseFinder --platform=win32 --arch=x64 --out=dist/ --overwrite --icon=app.ico",
+    "rebuild": "electron-rebuild -f -w better-sqlite3"
   },
   "repository": {
     "type": "git",

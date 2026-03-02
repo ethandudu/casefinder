@@ -1,14 +1,8 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path')
-const sqlite3 = require('sqlite3').verbose();
+const db = require('better-sqlite3')(path.join(__dirname, 'db.sqlite3'));
 
-const db = new sqlite3.Database(path.join(__dirname, 'db.sqlite3'), (err) => {
-    if (err) {
-        console.error(err.message);
-    } else {
-        initializeDatabase();
-    }
-});
+
 
 function initializeDatabase() {
     db.serialize(() => {
@@ -20,6 +14,7 @@ function initializeDatabase() {
             "case" VARCHAR(15) NOT NULL,
             "owner" VARCHAR(255) NULL DEFAULT NULL
         )`);
+        db.run('CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)');
     });
 }
 
@@ -60,31 +55,25 @@ ipcMain.on('search', (event, arg) => {
         params = [city, `%${owner}%`];
     }
     
-    db.all(query, params, (err, rows) => {
-        if (err) {
-            console.error(err.message);
-            event.reply('search-results', {error: err.message});
-        } else {
-            if (rows.length === 0) {
-                event.reply('search-results', {error: 'No results found.'});
-            } else {
-                event.reply('search-results', {results: rows});
-            }
-        }
-    });
+    const stmt = db.prepare(query);
+    const rows = stmt.all(params);
+    if (rows.length === 0) {
+        event.reply('search-results', {error: 'No results found.'});
+    } else {
+        event.reply('search-results', {results: rows});
+    }
+});
+
+ipcMain.on('add-case', (event, arg) => {
+    
 });
 
 ipcMain.on('get-cities', (event, arg) => {
-    db.all(`SELECT DISTINCT city FROM cases`, [], (err, rows) => {
-        if (err) {
-            console.error(err.message);
-            event.reply('cities', {error: err.message});
-        } else {
-            if (rows.length === 0) {
-                event.reply('cities', {error: 'No cities found.'});
-            } else {
-                event.reply('cities', {cities: rows});
-            }
-        }
-    });
+    const stmt = db.prepare('SELECT DISTINCT city FROM cases');
+    const rows = stmt.all();
+    if (rows.length === 0) {
+        event.reply('cities', {error: 'No cities found.'});
+        return;
+    }
+    event.reply('cities', {cities: rows});
 });
