@@ -1,8 +1,29 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path')
-const db = require('better-sqlite3')(path.join(__dirname, 'db.sqlite3'));
+let db;
+// Expose app version to renderer via IPC
+ipcMain.handle('get-app-version', () => {
+    return app.getVersion();
+});
+
+// Expose theme to renderer via IPC
+ipcMain.handle('get-theme', () => {
+    const fs = require('fs');
+    const ini = require('ini');
+    const configPath = path.join(__dirname, 'settings.ini');
+    if (fs.existsSync(configPath)) {
+        return ini.parse(fs.readFileSync(configPath, 'utf-8')).theme || 'light';
+    }
+    return 'light';
+});
 
 
+function initializeSettings() {
+    const configPath = path.join(__dirname, 'settings.ini');
+    if (!require('fs').existsSync(configPath)) {
+        require('fs').writeFileSync(configPath, 'theme=light; dark or light');
+    }
+}
 
 function initializeDatabase() {
     db.serialize(() => {
@@ -31,6 +52,8 @@ function createWindow () {
         show: false,
         icon: path.join(__dirname, 'app.ico')
     })
+    initializeDatabase();
+    initializeSettings();
     win.maximize();
     win.show();
     win.loadFile('src/index.html')
@@ -40,6 +63,7 @@ app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
+        db.close();
         app.quit()
     }
 })
