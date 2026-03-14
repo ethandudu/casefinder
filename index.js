@@ -26,17 +26,46 @@ function initializeSettings() {
 }
 
 function initializeDatabase() {
-    db.serialize(() => {
-        db.run(`CREATE TABLE IF NOT EXISTS cases (
-            "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            "city" INTEGER NOT NULL DEFAULT 0,
-            "section" VARCHAR(2) NOT NULL,
-            "plot" VARCHAR(255) NOT NULL,
-            "case" VARCHAR(15) NOT NULL,
-            "owner" VARCHAR(255) NULL DEFAULT NULL
-        )`);
-        db.run('CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)');
-    });
+    // Check if the database file exists
+    if (!require('fs').existsSync(path.join(__dirname, 'db.sqlite3'))) {
+        try {
+            db = require('better-sqlite3')(path.join(__dirname, 'db.sqlite3'));
+            const stmts = [
+                `CREATE TABLE IF NOT EXISTS cases (
+                    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    "city" VARCHAR(255) NOT NULL,
+                    "section" VARCHAR(2) NOT NULL,
+                    "plot" VARCHAR(255) NOT NULL,
+                    "case" VARCHAR(15) NOT NULL,
+                    "owner" VARCHAR(255) NULL DEFAULT NULL
+                )`,
+                `CREATE INDEX IF NOT EXISTS id ON cases (id)`,
+                `CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)`,
+                'CREATE INDEX IF NOT EXISTS key ON settings (key)',
+                `INSERT OR IGNORE INTO settings (key, value) VALUES ('db_version', '1')`,
+                `INSERT OR IGNORE INTO settings (key, value) VALUES ('cities_version', '1')`
+            ];
+            stmts.forEach(stmt => db.prepare(stmt).run());
+        } catch (error) {
+            console.error('Failed to initialize database:', error);
+            app.quit();
+        }
+    } else {
+        db = require('better-sqlite3')(path.join(__dirname, 'db.sqlite3'));
+        // check if table settings exists and if db_version is 1, if not, we can handle migrations here in the future
+        try {
+            const row = db.prepare('SELECT value FROM settings WHERE key = ?').get('db_version');
+            if (!row || row.value !== '1') {
+                
+            }
+        } catch (error) {
+            const stmts = [
+                `CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)`,
+                `INSERT OR IGNORE INTO settings (key, value) VALUES ('db_version', '1')`
+            ];
+            stmts.forEach(stmt => db.prepare(stmt).run());
+        }
+    }
 }
 
 function createWindow () {
